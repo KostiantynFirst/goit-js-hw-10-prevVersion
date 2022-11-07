@@ -36,9 +36,7 @@ const buildCountriesMarkup = (data) => {
         'Too many matches found. Please enter a more specific name.'
       );
       return;
-    }
-
-    if(data.length >= 2 && data.length < 10) {
+    } else if (data.length >= 2 && data.length < 10) {
       countryInfo.innerHTML = '';
       countryList.innerHTML = data.map(el => {
         return `
@@ -58,7 +56,7 @@ const buildCountriesMarkup = (data) => {
       <p>Population: <span>${country.population}</span></p>
       <p>Languages: <span>${Object.values(
         country.languages
-      )}</span></p>
+      ).join(", ")}</span></p>
         `;
     }
 
