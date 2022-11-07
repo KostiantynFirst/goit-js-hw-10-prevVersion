@@ -1,36 +1,7 @@
-import './css/styles.css';
-
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchCountries } from './fetchCountries';
+import { countryInfo, countryList } from './vars';
 
-const debounce = require('lodash.debounce');
-
-const DEBOUNCE_DELAY = 300;
-
-const searchCountries = document.querySelector('#search-box');
-const countryList = document.querySelector('.country-list');
-const countryInfo = document.querySelector('.country-info');
-
-
-const inputField = (e) => {
-    const countryName = e.target.value.trim();
-    if(!countryName) {
-        countryList.innerHTML = '';
-        countryInfo.innerHTML = '';
-        return;
-    }
-
-    fetchCountries(countryName)
-    .then(buildCountriesMarkup)
-    .catch(() => {
-        Notify.failure('Oops, there is no country with that name');
-        countryList.innerHTML = '';
-        countryInfo.innerHTML = '';
-    });
-
-}
-
-const buildCountriesMarkup = (data) => { 
+export const buildCountriesMarkup = (data) => { 
     if (data.length > 10) {
       Notify.warning(
         'Too many matches found. Please enter a more specific name.'
@@ -61,8 +32,3 @@ const buildCountriesMarkup = (data) => {
     }
 
   };
-
-searchCountries.addEventListener('input', debounce(inputField, DEBOUNCE_DELAY))
-
-        
-

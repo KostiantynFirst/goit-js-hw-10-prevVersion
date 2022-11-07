@@ -1,10 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { fetchCountries } from './fetchCountries';
 import {buildCountriesMarkup} from './buildCountriesMarkup'
-
-const searchCountries = document.querySelector('#search-box');
-const countryList = document.querySelector('.country-list');
-const countryInfo = document.querySelector('.country-info');
+import { countryInfo, countryList } from './vars';
 
 export const inputField = (e) => {
     const countryName = e.target.value.trim();
@@ -16,7 +13,10 @@ export const inputField = (e) => {
 
     fetchCountries(countryName)
     .then(buildCountriesMarkup)
-    .catch(() =>
-        Notify.failure('Oops, there is no country with that name')
-    );
+    .catch(() => {
+        Notify.failure('Oops, there is no country with that name');
+        countryList.innerHTML = '';
+        countryInfo.innerHTML = '';
+    });
+
 }
